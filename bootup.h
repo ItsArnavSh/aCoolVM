@@ -15,8 +15,9 @@
 #define PC 8   // Program Counter
 #define SP 9   // Stack Pointer
 //From there we will have the stack starting
-#define INSTRUCTION 10
+#define INSTRUCTION 9
 extern uint16_t memory[MEM_SIZE];
+extern uint16_t codeEndPointer;
 void bootupVM();
 void loadProgram(uint16_t* bytecode);
 #endif

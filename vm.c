@@ -3,6 +3,10 @@
 void startExecution(){
     //First we start at the program counter
     //memory[INSTRUCTION]
-    void(*opfunc[16])() = {mov,pnt};
-    opfunc[memory[INSTRUCTION]>>12]();
+    void(*opfunc[2])() = {mov,pnt};
+    while(memory[PC]!=codeEndPointer){
+        opfunc[memory[memory[PC]]>>12]();
+        printf("Executed Line %d %d\n",memory[PC],codeEndPointer);
+        memory[PC]++;
+    }
 }
