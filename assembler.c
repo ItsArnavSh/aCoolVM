@@ -73,10 +73,9 @@ uint16_t* assembler(char* filename){
             }
 
             int remainder = 3-paramLabel;
-            printf("remainder %d\n",remainder);
-            print_binary(instruction);
+            //print_binary(instruction);
             instruction <<= 4*remainder;
-            print_binary(instruction);
+            //print_binary(instruction);
             for(int i=0;i<8;i++){
                 str[i] = 0;
             }

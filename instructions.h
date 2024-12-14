@@ -1,4 +1,10 @@
 #include <stdint.h>
 #include "bootup.h"
-void mov();
-void pnt();
+void mov_ins();
+void pnt_ins();
+void and_ins();
+void or_ins();
+void xor_ins();
+void add_ins();
+void sub_ins();
+void cpy_ins();

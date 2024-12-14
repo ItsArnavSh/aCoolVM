@@ -75,8 +75,12 @@ void loadTables() {
     // Example command insertions (with opcodes)
     insert(command_table, "MOV", 0x0);
     insert(command_table, "PNT", 0x1);
-    insert(command_table, "BR", 0x2);
-    // Add more commands as needed...
+    insert(command_table, "CPY", 0x2);
+    insert(command_table, "AND", 0x3);
+    insert(command_table, "OR", 0x4);
+    insert(command_table, "XOR", 0x5);
+    insert(command_table, "ADD", 0x6);
+    insert(command_table, "SUB", 0x7);
 
     // Example register insertions (with register numbers)
     insert(register_table, "R1", 0x1);
