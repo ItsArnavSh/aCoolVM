@@ -1,8 +1,7 @@
+#include "assembler.h"
+#include "common.h"
+#include "bootup.h"
 #include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include "bootup.h"
-#include "bootup.h"
 //Now we will
 
 int main(int argc, char** argv){
@@ -12,5 +11,6 @@ int main(int argc, char** argv){
         printf("Incorrect Code");
         exit(0);
     }
-    loadIntoMemory(asmParser(argv));
+    uint16_t* bytecode = assembler(argv[1]);
+    loadProgram(bytecode);
 }

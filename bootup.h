@@ -1,6 +1,6 @@
 #ifndef BOOTUP_H
 #define BOOTUP_H
-#include <stdint.h>
+#include "common.h"
 #define MEM_SIZE 65535
 //10 Registers, 8 General, and last 2 for PC and SP
 // Registers
@@ -18,5 +18,5 @@
 #define INSTRUCTION 10
 extern uint16_t memory[MEM_SIZE];
 void bootupVM();
-
+void loadProgram(uint16_t* bytecode);
 #endif
