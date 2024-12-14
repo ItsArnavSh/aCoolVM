@@ -1,6 +1,7 @@
 #include "assembler.h"
 #include "common.h"
 #include "bootup.h"
+#include "vm.h"
 #include <stdint.h>
 //Now we will
 
@@ -12,9 +13,6 @@ int main(int argc, char** argv){
         exit(0);
     }
     uint16_t* bytecode = assembler(argv[1]);
-    printf("The length of the code is: %d\n",bytecode[0]);
-    for(int i=1;i<bytecode[0];i++){
-        print_binary(bytecode[i]);
-    }
-    //loadProgram(bytecode);
+    loadProgram(bytecode);//Now the bytecode has been loaded into the memory
+    startExecution();
 }
