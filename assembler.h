@@ -1,7 +1,8 @@
 #ifndef ASSEMBLER_H
-#define ASSEMBER_H
+#define ASSEMBLER_H
 #include "common.h"
 #include "hashMap.h"
+#include "debugger.h"
 #define LINESIZE 128
 uint16_t* assembler(char* filename);
 typedef struct instruction{

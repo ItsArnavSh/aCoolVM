@@ -89,5 +89,4 @@ void loadTables() {
     insert(register_table, "R8", 0x8);
     insert(register_table, "PC", 0x9);
     insert(register_table, "SP", 0xA);
-    // Add more registers as needed...
 }

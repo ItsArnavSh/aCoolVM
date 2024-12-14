@@ -1,4 +1,5 @@
 #include "assembler.h"
+#include "debugger.h"
 #include "hashMap.h"
 #include <ctype.h>
 int is_whole_number(const char* str) {
@@ -21,39 +22,47 @@ int is_whole_number(const char* str) {
 //If that isnt cool, I dont know what is
 uint16_t* assembler(char* filename){
     uint16_t bytecodeBuffer[256];
-    uint8_t pointer = 0;
+    uint8_t pointer = 1;
     FILE *file = fopen(filename,"r");
     char line[LINESIZE];
     loadTables();//Load lookup table
     while(fgets(line,sizeof(line),file)!=NULL){
-        uint16_t instruction;
+        uint16_t instruction = 0;
         int paramLabel = 0;
         //Now we will loop through the line
         char str[8];
         uint8_t strPointer = 0;
         for(uint8_t i = 0;line[i]!='\0';i++){
+            if(!strPointer){
+                for(int i=0;i<8;i++){
+                    str[i] = 0;
+                }
+            }
             if(line[i]==32 || line[i+1] == '\0'){//Space or last in line
                 int8_t code = lookup(command_table,str);
-                if(code != -1){
-                    instruction |= code;
-                    continue;
-                }
-                code = lookup(register_table,str);
-                if(code != -1){
-                    instruction = instruction << 4;
-                    instruction |= code;
-                    paramLabel++;
-                    continue;
-                }
+                int8_t code2 = lookup(register_table,str);
                 int num = is_whole_number(str);
-                if(num!=-1){
-                    instruction = instruction << 4;
+                if(code != -1){
                     instruction |= code;
+                    strPointer = 0;
+                    continue;
+                }
+                if(code2 != -1){
+                    instruction = instruction << 4;
+                    instruction |= code2;
                     paramLabel++;
+                    strPointer = 0;
+                    continue;
+                }
+                else if(num!=-1){
+                    instruction = instruction << 4;
+                    instruction |= num;
+                    paramLabel++;
+                    strPointer = 0;
                     continue;
                 }
                 else{
-                    printf("Invalid Expression");
+                    printf("Invalid Expression: %s",str);
                     exit(0);
                 }
             }
@@ -62,8 +71,12 @@ uint16_t* assembler(char* filename){
             strPointer++;
             }
             }
+
             int remainder = 3-paramLabel;
+            printf("remainder %d\n",remainder);
+            print_binary(instruction);
             instruction <<= 4*remainder;
+            print_binary(instruction);
             for(int i=0;i<8;i++){
                 str[i] = 0;
             }
@@ -74,7 +87,8 @@ uint16_t* assembler(char* filename){
         }
         //Now we will make a new buffer with appropriate size for the buffer
         uint16_t* bytecode = (uint16_t*)malloc(pointer*2);
-        for(int i=0;i<pointer;i++){
+        bytecode[0] = pointer;
+        for(int i=1;i<pointer;i++){
             *(bytecode+i) = bytecodeBuffer[i];
         }
         return bytecode;
